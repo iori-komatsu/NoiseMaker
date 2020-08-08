@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.ComponentModel;
 using Microsoft.Win32;
 using System.IO;
+using System.Reactive.Linq;
+using System;
+using System.Threading;
+using System.Reactive;
 
 namespace NoiseMaker {
     /// <summary>
@@ -18,17 +20,18 @@ namespace NoiseMaker {
             InitializeComponent();
 
             imNoise.Source = noiseBitmap;
-            Noise.PropertyChanged += Noise_PropertyChanged;
             UpdateNoiseImage();
+
+            Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                h => Noise.PropertyChanged += h, h => Noise.PropertyChanged -= h
+            )
+                .Sample(TimeSpan.FromMilliseconds(100))
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe(_ => UpdateNoiseImage());
         }
 
         private Noise Noise {
             get => (Noise)Resources["ViewModel"];
-        }
-
-
-        private void Noise_PropertyChanged(object sender, PropertyChangedEventArgs e) {
-            UpdateNoiseImage();
         }
 
         private void UpdateNoiseImage() {
