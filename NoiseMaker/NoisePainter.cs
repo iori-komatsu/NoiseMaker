@@ -28,7 +28,7 @@ namespace NoiseMaker {
         }
 
         public static void Paint(WriteableBitmap bitmap, Noise noise) {
-            var rng = new XorShift128Plus(noise.RandomSeed);
+            var rng = new XorShift128Plus(noise.RandomSeed.Value);
             WritePixels(bitmap, (x, y) => {
                 byte r = (byte)rng.Next(256);
                 byte g = (byte)rng.Next(256);

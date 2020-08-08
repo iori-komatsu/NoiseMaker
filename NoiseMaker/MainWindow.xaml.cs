@@ -22,9 +22,7 @@ namespace NoiseMaker {
             imNoise.Source = noiseBitmap;
             UpdateNoiseImage();
 
-            Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                h => Noise.PropertyChanged += h, h => Noise.PropertyChanged -= h
-            )
+            Noise.RandomSeed
                 .Sample(TimeSpan.FromMilliseconds(100))
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(_ => UpdateNoiseImage());
