@@ -8,7 +8,7 @@
         private ulong state0;
         private ulong state1;
 
-        public XorShift128Plus(ulong seed0, ulong seed1) {
+        public XorShift128Plus(ulong seed0, ulong seed1 = 1477776990746309507) {
             state0 = seed0;
             state1 = seed1;
         }
