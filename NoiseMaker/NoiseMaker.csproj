@@ -130,7 +130,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Noise.cs" />
+    <Compile Include="NoiseVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
